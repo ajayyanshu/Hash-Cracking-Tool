@@ -15,6 +15,7 @@ Ensure you have Python 3 and pip installed. Install the necessary libraries usin
 
 ```sh
 sudo apt-get update
+sudo apt-get install python3
 sudo apt-get install python3-pip
 git clone https://github.com/ajayyanshu/HashCrackPro.git
 cd HashCrackPro 
