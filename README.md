@@ -33,7 +33,7 @@ python3 brute_force.py <hash> <algorithm> <charset> <max_length>
 - `<hash>`: The target hash you are trying to crack.
 - `<algorithm>`: The hashing algorithm (md5, sha1, sha256, sha3_256).
 - `<charset>`: The set of characters to use for generating potential plaintexts (e.g., `abcdefghijklmnopqrstuvwxyz`).
-- `<max_length>`: The maximum length of the plaintexts to try. ( Ex. 1234567890 ) 
+- `<max_length>`: The maximum length of the plaintexts to try. ( e.g., '1234567890' ) 
 
 ### Example
 
