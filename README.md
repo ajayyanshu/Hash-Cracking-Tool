@@ -48,7 +48,7 @@ HashCrackPro is intended for educational and ethical testing purposes only. Unau
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](https://drive.google.com/file/d/1SLTa0ppwSttFH863zQDrJAzSPqORiXFu/view?usp=sharing) file for details.
 
 ## Contributions
 
