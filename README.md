@@ -16,7 +16,8 @@ Ensure you have Python 3 and pip installed. Install the necessary libraries usin
 ```sh
 sudo apt-get update
 sudo apt-get install python3-pip
-pip3 install hashlib itertools
+git clone https://github.com/ajayyanshu/HashCrackPro.git
+cd HashCrackPro 
 ```
 
 ## Usage
@@ -24,7 +25,7 @@ pip3 install hashlib itertools
 To use HashCrackPro, clone this repository and run the script with the required parameters.
 
 ```sh
-./brute_force.py <hash> <algorithm> <charset> <max_length>
+python3 brute_force.py <hash> <algorithm> <charset> <max_length>
 ```
 
 ### Parameters
@@ -32,14 +33,14 @@ To use HashCrackPro, clone this repository and run the script with the required 
 - `<hash>`: The target hash you are trying to crack.
 - `<algorithm>`: The hashing algorithm (md5, sha1, sha256, sha3_256).
 - `<charset>`: The set of characters to use for generating potential plaintexts (e.g., `abcdefghijklmnopqrstuvwxyz`).
-- `<max_length>`: The maximum length of the plaintexts to try.
+- `<max_length>`: The maximum length of the plaintexts to try. ( Ex. 1234567890 ) 
 
 ### Example
 
 To brute-force an MD5 hash using lowercase letters with a maximum length of 4:
 
 ```sh
-./brute_force.py 5d41402abc4b2a76b9719d911017c592 md5 abcdefghijklmnopqrstuvwxyz 4
+python3 brute_force.py 5d41402abc4b2a76b9719d911017c592 md5 abcdefghijklmnopqrstuvwxyz 4
 ```
 
 ## Disclaimer
