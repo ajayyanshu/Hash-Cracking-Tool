@@ -48,12 +48,19 @@ python3 brute_force.py 5d41402abc4b2a76b9719d911017c592 md5 abcdefghijklmnopqrst
 
 HashCrackPro is intended for educational and ethical testing purposes only. Unauthorized use of brute-force techniques can be illegal and unethical. Use this tool responsibly.
 
+
+## Donations
+
+Support the development of HashCrackPro by [donating](https://patreon.com).
+
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](https://drive.google.com/file/d/1SLTa0ppwSttFH863zQDrJAzSPqORiXFu/view?usp=sharing) file for details.
 
+
 ## Contributions
 
 Contributions are welcome! Please fork this repository and submit pull requests with your enhancements.
+
 
 ---
