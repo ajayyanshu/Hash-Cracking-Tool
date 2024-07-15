@@ -52,7 +52,7 @@ HashCrackPro is intended for educational and ethical testing purposes only. Unau
 
 If you find HashCrackPro useful and would like to support its development, please consider making a donation. Your contributions help us maintain and improve the project.
 
-[![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://paypal.me/ajaykr08?country.x=IN&locale.x=en_GB)
+[![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)]()
 
 ## License
 
