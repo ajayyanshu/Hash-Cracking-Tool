@@ -58,6 +58,10 @@ If you find HashCrackPro useful and would like to support its development, pleas
 
 This project is licensed under the MIT License. See the [LICENSE](https://drive.google.com/file/d/1SLTa0ppwSttFH863zQDrJAzSPqORiXFu/view?usp=sharing) file for details.
 
+## Contact with us
+
+For inquiries and support, please contact us at [ajayyanshu@gmail.com](mailto:ajayyanshu@gmail.com).
+
 
 ## Contributions
 
