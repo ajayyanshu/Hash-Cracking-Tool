@@ -1,0 +1,5 @@
+# requirements.txt
+tqdm>=4.65.0
+pycryptodome>=3.18.0
+pyblake2>=1.1.2
+argparse>=1.4.0
