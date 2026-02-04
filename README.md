@@ -1,101 +1,122 @@
-# Hash Cracker
+# HashCracker 
 
-**HashCracker** is a high-performance, multi-threaded password recovery tool written in Python. It is inspired by features from professional tools like Hashcat, but built to be a clean, modern, and extensible Python project.
+**HashCracker** is an advanced, multi-threaded password recovery tool written in Python. It is designed to be fast, efficient, and versatile, supporting multiple attack modes (Dictionary, Mask, Hybrid) and over 20 different hashing algorithms including MD5, SHA-series, NTLM, MySQL, and specialized formats like WinZip and Bcrypt.
 
-This tool is for educational purposes and ethical, authorized use only.
 
----
-
-##  Features
-
-* ** Multi-Threaded:** Uses all available CPU cores (`multiprocessing`) to dramatically speed up cracking.
-* ** Multiple Attack Modes:**
-    * **Brute-Force:** Standard character-by-character attack.
-    * **Dictionary:** Tests millions of words from a wordlist.
-    * **Rule-Based:** Smartly mutates dictionary words (`pass` -> `Pass!`, `P@ss123`, etc.) to find common patterns.
-    * **Mask Attack:** Targeted brute-force for known patterns (e.g., `Admin?d?d?d`).
-* ** Live Progress Bar:** A clean, real-time progress bar for all attack modes using `tqdm`.
-* ** Professional CLI:** A user-friendly command-line interface built with Python's `argparse` module, complete with help menus.
 
 ---
 
-##  Installation
+## Features
 
-1.  Clone the repository:
-    ```bash
-    git clone https://github.com/ajayyanshu/HashCracker.git
-    cd hashcracker
-    ```
-
-3.  Install the required Python packages:
-    ```bash
-    apt-get install python3
-    pip install tqdm
-    ```
+* **Multi-Core Processing:** Utilizes Python's `multiprocessing` to maximize CPU usage.
+* **Auto-Detection:** Automatically identifies common hash types (MD5, SHA1, SHA256, etc.).
+* **5 Attack Modes:**
+    * **Straight (Dictionary):** Standard wordlist attack.
+    * **Combination:** Combines words from two different wordlists.
+    * **Mask:** Brute-force using specific patterns (e.g., 4 lowercase letters + 2 digits).
+    * **Hybrid:** Combines Wordlists with Masks (append or prepend).
+* **Salt Support:** robust support for salted hashes in `hash:salt` format.
+* **Live Statistics:** Real-time progress bar showing speed (hashes/sec) and estimated completion.
 
 ---
 
-##  Usage
+##  Requirements
 
-The script is run from the command line, with your target hash as the first argument. You must then choose one attack mode.
+* **Python 3.x**
+* **OS:** Linux 
+* **Optional Modules:**
+    * `bcrypt` (for Bcrypt support)
 
-###  Get Help
-
-To see all available commands and options, use the `-h` flag:
-```bash
-python3 passwordcracker.py -h
-```
----
-### 1. Brute-Force Attack (`-b`)
-Checks all combinations of a given charset up to a max length.
+### Installation
 
 ```bash
-# Example: Crack a 5-character, all-lowercase password
-# Hash for 'hello' (sha256): 2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824
-python3 passwordcracker.py 2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824 -a sha256 -b  -c abcdefghijklmnopqrstuvwxyz -l 5
+# Clone the repository
+git clone https://github.com/ajayyanshu/HashCracker.git
+cd HashCracker
+
+# (Optional) Install bcrypt for Mode 3200 support
+pip3 install bcrypt
 ```
-### 2. Dictionary Attack (-d)
-Tests every word from a given wordlist file (e.g., rockyou.txt).
+## Usage
+Basic Syntax
+```bash
+python3 password.py [HASH] [OPTIONS]
+
+```
+
+## Command Line Arguments
+
+| Argument | Description |
+| :--- | :--- |
+| **Positional** | |
+| `hash` | The target hash or `hash:salt` string. |
+| **Configuration** | |
+| `-m`, `--mode` | The Hash Type ID (see list below). Auto-detected if omitted. |
+| `-a`, `--attack-mode` | Attack mode: `0` (Dict), `1` (Combo), `3` (Mask), `6/7` (Hybrid). |
+| `-t`, `--threads` | Number of CPU threads to use (Default: 4). |
+| **Input Sources** | |
+| `-d`, `--wordlist` | Path to the primary wordlist (Required for Modes 0, 1, 6, 7). |
+| `--wordlist2` | Path to secondary wordlist (Required for Mode 1). |
+| `--mask` | Pattern mask (Required for Modes 3, 6, 7). |
+| **Info** | |
+| `--list` | List all supported hash types and IDs. |
+| `--info` | Show detailed tool information. |
+
+##  Attack Modes
+
+### 1. Dictionary Attack
+   Reads passwords line-by-line from a wordlist.
 
 ```bash
-# Example: Crack a password using a wordlist
-# Hash for 'password' (md5): e10adc3949ba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824
-python3 passwordcracker.py e10adc3949ba59abbe56e057f20f883e -a md5 -d /path/to/rockyou.txt
+python3 password.py -m 0 -d rockyou.txt '5d41402abc4b2a76b9719d911017c592'
+
 ```
-### 3. Rule-Based Attack (-d + -r)
-The most powerful attack. Applies a set of common mutations to every word in your dictionary.
+### 2. Mask Attack (`-a 3`)
+Brute-forces based on a specific character pattern.
+
+**Mask Placeholders:**
+* `?l` = Lowercase (a-z)
+* `?u` = Uppercase (A-Z)
+* `?d` = Digits (0-9)
+* `?s` = Special (!@#$...)
+* `?a` = All printable
+* `?h` / `?H` = Hex (lower/upper)
+
+**Example:** Crack a password known to be 4 lowercase letters followed by 2 digits (e.g., "pass12"):
+```bash
+python3 password.py -m 0 -a 3 --mask "?l?l?l?l?d?d" <hash>
+
+```
+## 3. **Combination Attack (-a 1)**
+Combines words from two files (e.g., names.txt + dates.txt).
+```bash
+python3 password.py -m 0 -a 1 -d words1.txt --wordlist2 words2.txt hash:salt
+
+```
+## 4. Hybrid Attack (-a 6 or -a 7)
+
+* Mode 6 (Wordlist + Mask): Appends mask to word (e.g., Password + 123).
+* Mode 7 (Mask + Wordlist): Prepends mask to word (e.g., 123 + Password).
 
 ```bash
-# Example: Crack 'Password123' using the base word 'password'
-# Hash for 'Password123' (sha1): c254b5505372b86f488583457016312b84781d05
-python3 passwordcracker.py c254b5505372b86f488583457016312b84781d05 -a sha1  -d /path/to/rockyou.txt -r
+# Appends 3 digits to every word in rockyou.txt
+python3 password.py -m 0 -a 6 -d words.txt --mask "?d?d?s" hash
+
 ```
-### 4. Mask Attack
-A highly-targeted brute-force. Use this when you know parts of the password.
+##  Supported Hash Types (Common)
 
-Mask Syntax:
+Use `--list` to see the full table of 20+ algorithms.
 
-• ?l = Lowercase letter (a-z)
+| ID | Algorithm | Example Format |
+| :--- | :--- | :--- |
+| **0** | MD5 | `5d4140...` |
+| **10** | MD5(Pass.Salt) | `hash:salt` |
+| **100** | SHA1 | `a9993e...` |
+| **1000** | NTLM | `b4b9b0...` |
+| **1400** | SHA2-256 | `ef797c...` |
+| **3200** | Bcrypt | `$2a$10$...` |
+| **13600** | WinZip (AES) | `$zip2$*...` |
 
-• ?u = Uppercase letter (A-Z)
-
-• ?d = Digit (0-9)
-
-• ?s = Special Symbol (!@#$%...)
-
-• Any other character is a literal.
-
-```bash
-# Example: Crack a password like 'User2024'
-# We guess the mask is: '?u?l?l?l?d?d?d?d'
-# Hash for 'User2024' (md5): 98da995a6d3f20c438f2f6902e86663f
-python3 passwordcracker.py 98da995a6d3f20c438f2f6902e86663f -a md5 -m '?u?l?l?l?d?d?d?d'
-
-# Example: Crack a password like 'Admin!23'
-# We guess the mask is: 'Admin?s?d?d'
-python3 passwordcracker.py <hash_here> -a sha256 -m 'Admin?s?d?d'
-```
----
 ###  Support & Donations
 If you find HashCracker useful and would like to support its development, please consider making a donation and would like to support its development, please consider making a donation. Your contributions help us maintain and improve the project.
 
@@ -104,8 +125,6 @@ If you find HashCracker useful and would like to support its development, please
 [![Donate](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgMgW12teTME3e1Ap4Lc6MuQ7mFoEfyKINWAQ8dDx0vRR6XXNXGNXSaOgFdFhB2kTv8d6r5TiMIpRqJv9EnrM2YU1Syrvq4KO32YcmjiJk-GLuxHGMwfTPIO1Zz1JE2lCSMTRcrY1JJues1jpC4qotBNumo3d3dC79uRFulGasM8vzSdneJmzunxKDiUKI2/s386/upi.PNG)]()
 
 
-
----
 ##  Contact
 
 **Ajay Kumar** *Security Engineer & Developer* [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?style=flat&logo=linkedin)](https://linkedin.com/in/ajayyanshu/) [![GitHub](https://img.shields.io/badge/GitHub-Follow-black?style=flat&logo=github)](https://github.com/ajayyanshu) [![Instagram](https://img.shields.io/badge/Instagram-Follow-black?style=flat&logo=instagram)](https://www.instagram.com/ajayyanshu/)
