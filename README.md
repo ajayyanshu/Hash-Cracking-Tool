@@ -35,7 +35,7 @@ git clone https://github.com/ajayyanshu/HashCracker.git
 cd HashCracker
 
 # Execution
-chomd *+ password.py
+chomd +x password.py
 
 # (Optional) Install bcrypt for Mode 3200 support
 pip3 install bcrypt
