@@ -396,10 +396,10 @@ def main():
         epilog=f"""
 {Colors.GREEN}EXAMPLES:{Colors.ENDC}
   Dictionary Attack:
-    python3 password.py -m 0 -d rockyou.txt 5d41402abc4b2a76b9719d911017c592
+    python3 password.py -m 0 -d rockyou.txt '5d41402abc4b2a76b9719d911017c592'
   
   Mask Attack (4 lowercase + 2 digits):
-    python3 password.py -m 0 -a 3 --mask "?l?l?l?l?d?d" 5d41402abc4b2a76b9719d911017c592
+    python3 password.py -m 0 -a 3 --mask "?l?l?l?l?d?d" '5d41402abc4b2a76b9719d911017c592'
   
   Combination Attack (two wordlists):
     python3 password.py -m 0 -a 1 -d words1.txt --wordlist2 words2.txt hash:salt
@@ -408,7 +408,7 @@ def main():
     python3 password.py -m 0 -a 6 -d words.txt --mask "?d?d?s" hash
   
   Auto-detect hash type:
-    python3 password.py -d rockyou.txt 5d41402abc4b2a76b9719d911017c592
+    python3 password.py -d rockyou.txt '5d41402abc4b2a76b9719d911017c592'
   
 {Colors.YELLOW}MASK PLACEHOLDERS:{Colors.ENDC}
   ?l = lowercase letters (a-z)
@@ -673,3 +673,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
