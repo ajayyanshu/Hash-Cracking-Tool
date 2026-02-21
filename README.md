@@ -35,7 +35,10 @@ git clone https://github.com/ajayyanshu/HashCracker.git
 cd HashCracker
 
 # Execution
-chomd +x password.py
+chmod +x password.py
+
+# Insatll Python3 package 
+apt install python3 
 
 # (Optional) Install bcrypt for Mode 3200 support
 pip3 install bcrypt
